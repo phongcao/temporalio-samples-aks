@@ -1,0 +1,14 @@
+kind: Service
+apiVersion: v1
+
+metadata:
+  name: temporal-server
+
+spec:
+  type: LoadBalancer
+  selector:
+    app: temporal-server
+  ports:
+    - protocol: TCP
+      port: 7233
+      targetPort: 7233

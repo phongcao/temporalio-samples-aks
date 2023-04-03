@@ -1,0 +1,14 @@
+kind: Service
+apiVersion: v1
+
+metadata:
+  name: temporal-web
+
+spec:
+  type: LoadBalancer
+  selector:
+    app: temporal-web
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8088

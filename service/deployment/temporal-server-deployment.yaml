@@ -1,0 +1,46 @@
+kind: Deployment
+apiVersion: apps/v1
+
+metadata:
+  name: temporal-server
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: temporal-server
+  template:
+    metadata:
+      labels:
+        app: temporal-server
+    spec:
+      containers:
+        - name: temporal-server-container
+
+          image: temporalio/auto-setup:1.20.0
+          imagePullPolicy: Always
+
+          ports:
+            - containerPort: 7233
+
+          env:
+            - name: DB
+              valueFrom:
+                secretKeyRef:
+                  name: temporal-server
+                  key: db
+            - name: MYSQL_SEEDS
+              valueFrom:
+                secretKeyRef:
+                  name: temporal-server
+                  key: hostname
+            - name: MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: temporal-server
+                  key: username
+            - name: MYSQL_PWD
+              valueFrom:
+                secretKeyRef:
+                  name: temporal-server
+                  key: password

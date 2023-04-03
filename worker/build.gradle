@@ -1,0 +1,48 @@
+plugins {
+	id 'org.springframework.boot' version '3.0.0'
+	id 'io.spring.dependency-management' version '1.1.0'
+	id 'java'
+}
+
+apply plugin: 'io.spring.dependency-management'
+
+group = 'pantanal.temporal'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
+
+repositories {
+	mavenCentral()
+}
+
+ext {
+	javaSDKVersion = '1.18.1'
+}
+
+dependencies {
+	// Spring Boot
+	implementation 'org.springframework.boot:spring-boot-starter'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	// Temporal SDK
+	implementation "io.temporal:temporal-sdk:$javaSDKVersion"
+	implementation "io.temporal:temporal-opentracing:$javaSDKVersion"
+	testImplementation("io.temporal:temporal-testing:$javaSDKVersion")
+
+	// serverlessworkflow.io
+	implementation(platform('com.fasterxml.jackson:jackson-bom:2.14.2'))
+	implementation 'com.fasterxml.jackson.core:jackson-databind'
+	implementation 'com.fasterxml.jackson.core:jackson-core'
+	implementation group: 'io.serverlessworkflow', name: 'serverlessworkflow-api', version: '4.0.3.Final'
+	implementation group: 'io.serverlessworkflow', name: 'serverlessworkflow-validation', version: '4.0.3.Final'
+	implementation group: 'io.serverlessworkflow', name: 'serverlessworkflow-spi', version: '4.0.3.Final'
+	implementation group: 'io.serverlessworkflow', name: 'serverlessworkflow-util', version: '4.0.3.Final'
+	implementation group: 'net.thisptr', name: 'jackson-jq', version: '1.0.0-preview.20220705'
+
+	// Unit Test
+	testImplementation 'junit:junit:4.13.2'
+	testImplementation 'org.mockito:mockito-core:5.1.1'
+}
+
+test {
+	useJUnitPlatform()
+}

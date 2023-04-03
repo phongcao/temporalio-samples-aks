@@ -1,0 +1,28 @@
+kind: Deployment
+apiVersion: apps/v1
+
+metadata:
+  name: temporal-web
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: temporal-web
+  template:
+    metadata:
+      labels:
+        app: temporal-web
+    spec:
+      containers:
+        - name: temporal-web-container
+
+          image: temporalio/web:latest
+          imagePullPolicy: Always
+
+          ports:
+            - containerPort: 8088
+
+          env:
+            - name: TEMPORAL_GRPC_ENDPOINT
+              value: temporal-server:7233
